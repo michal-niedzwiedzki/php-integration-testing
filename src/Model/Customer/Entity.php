@@ -2,10 +2,11 @@
 
 namespace Model\Customer;
 
-class CustomerEntity {
+class Entity {
 
 	public $id;
 	public $name;
 	public $email;
+	public $password;
 
 }

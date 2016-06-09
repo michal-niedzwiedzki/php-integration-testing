@@ -1,8 +1,6 @@
 <?php
 
-namespace test\unit\model\Customer\Repository;
-
-require_once __DIR__ . "../../../../model/Customer/Repository.php";
+namespace Test\Unit\Model\Customer;
 
 use \Model\Customer\Repository;
 

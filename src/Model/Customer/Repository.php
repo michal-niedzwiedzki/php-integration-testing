@@ -2,10 +2,13 @@
 
 namespace Model\Customer;
 
-class CustomersRepository {
+/**
+ * Customers repository
+ */
+class Repository {
 
 	/**
-	 * Database handle
+	 * Database handler
 	 * @var \PDO
 	 */
 	protected $pdo;

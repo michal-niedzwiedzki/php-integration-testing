@@ -4,11 +4,14 @@ Integration testing in PHP
 In this tutorial you will step up to learn the basics of testing aggregated functionalities in PHP.
 The goal of this training is to up skill you in mocking and delivering mocks using various IoC techniques.
 
+To best answer the question "why integration testing?" let me point you to this video:
+https://www.youtube.com/watch?v=sEwvcqe0SPU
+
+Explanation in unit testing terms: all unit tests were passing. With integration testing we
+validate entire subsystems end-to-end.
+
 Before you begin
 ----------------
-
-Make sure you have binary PHP extension `xdebug` installed. If you're running Debian or Ubuntu
-the extension can be installed this way: `sudo apt-get install php5-xdebug`.
 
 1. Clone the repo at https://github.com/stronger/php-integration-testing.git
 2. Enter php-integration-testing directory `cd php-integration-testing`
@@ -17,11 +20,27 @@ the extension can be installed this way: `sudo apt-get install php5-xdebug`.
 
 PHPUnit report will be output to console and all test should be passing.
 
-For this training session we will be working with simple persistent model representing a customer in database.
-We will expand the task in each exercise using various testing techniques.
-
 In case you're stuck with some exercise you can take a peek at or merge with branch *exercise-n*,
 where *n* is exercise number between 1 and 5.
+
+Scenario
+--------
+
+For this training session we will be working with simple persistent model representing a customer in database.
+
+The cooperation of classes consists of:
+- Entity - representing customer object
+- Repository - providing persistence for customer data
+- Hydrator - providing translation layer between database and code
+- Service - acting as a facade for accessing and storing entities
+
+Simple use case: obtain customer entity object from database:
+```
+$service = new \Model\Customer\Service();
+$entity = $service->getById(42);
+```
+
+We will expand the task in each exercise using various testing techniques.
 
 Mocking
 -------
@@ -93,5 +112,44 @@ Update the `CustomersRepositoryTest` to add the following expectations on call o
 Try changing test values as well as expectations and see how PHPUnit report changes.
 Try changing quentity of calls from `once` to `twice` or `never`.
 
-Exercise 4: testing sequential expectations
--------------------------------------------
+Later, add invocation of method `closeCursor` on PDOStatement instance to release resources.
+Add corresponding expectation in test code. Use `at` qualifier instead of `once` (see documentation).
+
+Exercise 4: integration testing
+-------------------------------
+
+**Objective:** to understand importance of decoupling in integration testing.
+
+Programmer's interface to customer model is provided by service class.
+Said class uses not only repository object to fetch the data from database,
+but also turns the record into entity (class `Entity`) using hydrator.
+
+Our task is to test the whole cooperation of classes, that is to test the integrated
+subsystem related to customer model.
+
+Write integration test for service class using mocks.
+The main difficulty is to provide PDO mock to the service for dependency injection.
+
+To overcome the difficulty provide method `setDb` in service class.
+
+Exercise 5: introducing Service Locator pattern
+-----------------------------------------------
+
+**Objective:** to learn using indirection.
+
+In exercise 4 ugly workaround for PDO object was put in place.
+
+In this exercise we will replace imperative setting of PDO object with declarative approach
+using Service Locator pattern - another IoC technique.
+
+Write a service locator that registers objects under string key (similar to Registry in ZF).
+Then amend the service class to use service locator by string, i.e.:
+
+```
+public function getCustomerById($id) {
+	$pdo = \Locator::get("db");
+	(...)
+}
+```
+
+Write an end-to-end test for obtaining customer entity object and test its properties.

@@ -35,7 +35,7 @@
 
    <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
-         <directory suffix=".php">model/</directory>
+         <directory suffix=".php">src/Model/</directory>
       </whitelist>
    </filter>
 

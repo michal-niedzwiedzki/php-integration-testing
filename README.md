@@ -7,7 +7,7 @@ The goal of this training is to up skill you in mocking and delivering mocks usi
 To best answer the question "why integration testing?" let me point you to this video:
 https://www.youtube.com/watch?v=sEwvcqe0SPU
 
-Explanation in unit testing terms: all unit tests were passing, but the whole subsystem was never validated end-to-end.
+Explanation in software development terms: all unit tests were passing, but the whole subsystem was never validated end-to-end.
 
 How to get begin
 -----------------
@@ -47,7 +47,7 @@ Mocking
 -------
 
 Test doubles (mocks and/or stubs) are:
-- a replacement objects
+- a replacement objects (fakes)
 - constructed to mimic specific class or interface
 - instructed to behave in prescribed way
 - have no logic of their own.
@@ -67,12 +67,12 @@ programmer is given a component to work with rather than hand picking a componen
 Exercise 0: getting to know the code
 ------------------------------------
 
-Open the CustomersRepository class in `Model` directory.
+Open the *Repository* class in `src/Model/Customer/` directory.
 Examine how it connects to the database.
-Identify the potential problems when testing the code.
+Consider some potential problems when testing the code.
 
 - PDO is created in place with hardcoded values
-- the code dependans to database and db server
+- the code depends on database and db server
 - requires maintaining live and test version of a database
 - requires writing some switching code (not a functionality of the program itself)
 
@@ -81,18 +81,19 @@ Exercise 1: getting rid of database hardcoding
 
 **Objective:** to get the non-testable code to more testable state.
 
-In class CustomersRepository there is some database connection hardcoding done.
+In class *Repository* there is some database connection hardcoding done.
 Replace the hardcoding with PDO instance passed as constructor parameter.
 
 Write a test for `fetchById` method and run `vendor/bin/phpunit`.
 Expect them to fail due to MySQL server not running.
 
-**Highlight:** This technique is called Dependency Injection. Most commonly used in constructors.
+**Highlight:** This technique is called Dependency Injection.
+Most commonly dependency is injected upon construction.
 
 Exercise 2: mocking 101
 -----------------------
 
-**Objective:** to learn how mock objects
+**Objective:** to learn how mock objects.
 
 Refer to the PHPUnit documentation at https://phpunit.de/manual/current/en/test-doubles.html
 

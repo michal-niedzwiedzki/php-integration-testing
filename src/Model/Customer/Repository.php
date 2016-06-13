@@ -31,8 +31,8 @@ class Repository {
 	 * @return array
 	 */
 	public function fetchById($id) {
-		$stmt = $this->pdo->query("SELECT * FROM customers WHERE id = ? LIMIT 1", $id);
-		return $stmt->fetch();
+		return $this->pdo->query("SELECT * FROM customers WHERE id = ? LIMIT 1", $id)
+			->fetch();
 	}
 
 }

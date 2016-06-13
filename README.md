@@ -7,11 +7,10 @@ The goal of this training is to up skill you in mocking and delivering mocks usi
 To best answer the question "why integration testing?" let me point you to this video:
 https://www.youtube.com/watch?v=sEwvcqe0SPU
 
-Explanation in unit testing terms: all unit tests were passing. With integration testing we
-validate entire subsystems end-to-end.
+Explanation in unit testing terms: all unit tests were passing, but the whole subsystem was never validated end-to-end.
 
-Before you begin
-----------------
+How to get begin
+-----------------
 
 1. Clone the repo at https://github.com/stronger/php-integration-testing.git
 2. Enter php-integration-testing directory `cd php-integration-testing`
@@ -29,16 +28,18 @@ Scenario
 For this training session we will be working with simple persistent model representing a customer in database.
 
 The cooperation of classes consists of:
-- Entity - representing customer object
-- Repository - providing persistence for customer data
-- Hydrator - providing translation layer between database and code
-- Service - acting as a facade for accessing and storing entities
+- *Entity* - representing customer object
+- *Repository* - providing persistence for customer data
+- *Hydrator* - providing translation layer between database and code
+- *Service* - acting as a facade for accessing and storing entities
 
 Simple use case: obtain customer entity object from database:
 ```
 $service = new \Model\Customer\Service();
 $entity = $service->getById(42);
 ```
+
+Where service encapsulates accessing repository and hydrating entity.
 
 We will expand the task in each exercise using various testing techniques.
 
@@ -51,6 +52,10 @@ Test doubles (mocks and/or stubs) are:
 - instructed to behave in prescribed way
 - have no logic of their own.
 
+Example: Repository mock will expect method call to load from database,
+but will not actually do it. Instead it will return a record put together manually
+beforehand.
+
 Inversion of Control (IoC)
 --------------------------
 
@@ -62,7 +67,7 @@ programmer is given a component to work with rather than hand picking a componen
 Exercise 0: getting to know the code
 ------------------------------------
 
-Open the CustomersRepository class in `model` directory.
+Open the CustomersRepository class in `Model` directory.
 Examine how it connects to the database.
 Identify the potential problems when testing the code.
 
@@ -153,3 +158,9 @@ public function getCustomerById($id) {
 ```
 
 Write an end-to-end test for obtaining customer entity object and test its properties.
+
+Further reading
+---------------
+
+- PHPUnit documentation: https://phpunit.de/manual/current/en/test-doubles.html
+- Mockery framework: http://docs.mockery.io/en/latest/

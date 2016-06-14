@@ -15,8 +15,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function test_fetchById() {
 
-		// set expected outcome
-		$expected = [
+		// mock pdo
+		$record = [
 			"id" => 1,
 			"name" => "John Doe",
 			"email" => "johndoe@gmail.com",

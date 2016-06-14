@@ -14,20 +14,23 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function test_fetchById() {
-		$expected = ["id" => 1, "name" => "John Doe", "email" => "johndoe@gmail.com", "password" => ""];
 
-		// build PDO mock
-		// $pdo = $this->getMock("\\PDO");
-		// problem - will call constructor, constructor requires parameters
+		// create pdo instance
+		// ...
 
-		// to disable constructor with parameters use:
-		$pdo = $this->getMockBuilder("\\PDO")
-			->disableOriginalConstructor()
-			->getMock();
+		// instantiate repository and fetch actual value
+		// ...
 
-		// test expectations
-		$repository = new Repository($pdo);
-		$repository->fetchById(1);
+		// expected value
+		$record = [
+			"id" => 1,
+			"name" => "John Doe",
+			"email" => "johndoe@gmail.com",
+			"password" => "",
+		];
+
+		// test actual against expected
+		// ...
 	}
 
 }

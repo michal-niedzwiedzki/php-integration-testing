@@ -15,8 +15,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function test_fetchById() {
 
-		return $this->markTestIncomplete();
-
+		// set expected outcome
 		$expected = [
 			"id" => 1,
 			"name" => "John Doe",
@@ -24,17 +23,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase {
 			"password" => "",
 		];
 
-		// build PDO mock
-		// $pdo = $this->getMock("\\PDO"); // problem
+		// fetch actual value
+		// ...
 
-		// to disable constructor with parameters use:
-		$pdo = $this->getMockBuilder("\\PDO")
-			->disableOriginalConstructor()
-			->getMock();
-
-		// test expectations
-		$repository = new Repository($pdo);
-		$repository->fetchById(1);
+		// test if actual equals expected
+		// ...
 	}
 
 }

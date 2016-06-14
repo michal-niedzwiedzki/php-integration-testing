@@ -2,6 +2,8 @@
 
 namespace Model\Customer;
 
+use \Util\Locator;
+
 /**
  * Customers service
  */
@@ -20,31 +22,11 @@ class Service {
 	 * @return \Model\Customer\Entity
 	 */
 	public function getCustomerById($id) {
-		$pdo = $this->getDb();
+		$pdo = Locator::get("\\PDO");
 		$repository = new Repository($pdo);
 		$row = $repository->fetchById($id);
 		$hydrator = new Hydrator();
 		return $hydrator->hydrate(new Entity(), $row);
-	}
-
-	/**
-	 * Set database handler for the service
-	 *
-	 * @param \PDO $pdo
-	 * @return \Model\Customer\Service
-	 */
-	public function setDb(\PDO $pdo) {
-		$this->pdo = $pdo;
-		return $this;
-	}
-
-	/**
-	 * Return database handler
-	 *
-	 * @return \PDO
-	 */
-	public function getDb() {
-		return $this->pdo;
 	}
 
 }

@@ -4,6 +4,7 @@ namespace Test\Integration\Model\Customer;
 
 use \Model\Customer\Entity;
 use \Model\Customer\Service;
+use \Util\Locator;
 
 /**
  * Customer service integration test
@@ -33,9 +34,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase {
 		$stmt->expects($this->once())->method("closeCursor");
 		$pdo->expects($this->once())->method("query")->will($this->returnValue($stmt));
 
+		// inform service locator about pdo mock
+		Locator::set("\\PDO", $pdo);
+
 		// fetch actual value
 		$service = new Service();
-		$service->setDb($pdo); // ugly and annoying
 
 		// test if actual equals expected
 		$actual = $service->getCustomerById(1);

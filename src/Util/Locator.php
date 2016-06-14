@@ -14,6 +14,7 @@ class Locator {
 		// - lookup in definition table
 		// - instantiation on demand
 		// - singleton detection
+		// - phpunit detection
 		// - ...
 	}
 

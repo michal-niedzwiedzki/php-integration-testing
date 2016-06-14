@@ -16,12 +16,15 @@ class Repository {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct(\PDO $pdo) {
+		$this->pdo = $pdo;
+/*
 		$opts = [
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+			\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
 		];
-		$this->pdo = new PDO("mysql:dbname=myapp", "username", "password", $opts);
+		$this->pdo = new \PDO("mysql:dbname=myapp", "username", "password", $opts);
+*/
 	}
 
 	/**

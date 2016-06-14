@@ -14,10 +14,11 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function test_fetchById() {
-		$expected = ["id" => 1, "name" => "John Doe", "email" => "johndoe@gmail.com"];
+		$expected = ["id" => 1, "name" => "John Doe", "email" => "johndoe@gmail.com", "password" => ""];
 
 		// build PDO mock
-		// $pdo = $this->getMock("\\PDO"); // problem
+		// $pdo = $this->getMock("\\PDO");
+		// problem - will call constructor, constructor requires parameters
 
 		// to disable constructor with parameters use:
 		$pdo = $this->getMockBuilder("\\PDO")

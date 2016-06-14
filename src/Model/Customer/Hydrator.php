@@ -2,16 +2,19 @@
 
 namespace Model\Customer;
 
+use \Model\Customer\Entity;
+
 class Hydrator {
 
-	public function hydrate(Customer $customer, array $row) {
+	public function hydrate(Entity $customer, array $row) {
 		$customer->id = $row["id"];
-		$customer->name = $row["full_name"];
-		$customer->email = $row["email_address"];
-		$customer->password = $row["password_hash"];
+		$customer->name = $row["name"];
+		$customer->email = $row["email"];
+		$customer->password = $row["password"];
+		return $customer;
 	}
 
-	public function persist(Customer $customer) {
+	public function persist(Entity $customer) {
 		$row = [
 			"full_name" => $customer->name,
 			"email_address" => $customer->email,

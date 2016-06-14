@@ -2,7 +2,8 @@
 
 namespace Test\Integration\Model\Customer;
 
-use \Model\Customer\Repository;
+use \Model\Customer\Entity;
+use \Model\Customer\Service;
 
 /**
  * Customer service integration test
@@ -12,22 +13,33 @@ class ServiceTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @test
+	 * @covers \Model\Customer\Service::getCustomerById
 	 */
-	public function test_fetchById() {
+	public function test_getCustomerById() {
 
 		// set expected outcome
-		$expected = [
-			"id" => 1,
-			"name" => "John Doe",
-			"email" => "johndoe@gmail.com",
-			"password" => "",
-		];
+		$expected = new Entity();
+		$expected->id = 1;
+		$expected->name = "John Doe";
+		$expected->email = "johndoe@gmail.com";
+		$expected->password = "";
+
+		// create pdo mock
+		$pdo = $this->createMock("\\PDO");
+		$stmt = $this->createMock("\\PDOStatement");
+		$stmt->expects($this->once())
+			->method("fetch")
+			->will($this->returnValue(["id" => 1, "name" => "John Doe", "email" => "johndoe@gmail.com", "password" => "",]));
+		$stmt->expects($this->once())->method("closeCursor");
+		$pdo->expects($this->once())->method("query")->will($this->returnValue($stmt));
 
 		// fetch actual value
-		// ...
+		$service = new Service();
+		$service->setDb($pdo); // ugly and annoying
 
 		// test if actual equals expected
-		// ...
+		$actual = $service->getCustomerById(1);
+		$this->assertEquals($expected, $actual);
 	}
 
 }

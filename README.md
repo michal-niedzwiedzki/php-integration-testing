@@ -95,7 +95,7 @@ Exercise 2: mocking 101
 
 **Objective:** to learn how mock objects.
 
-Refer to the PHPUnit documentation at https://phpunit.de/manual/current/en/test-doubles.html
+Refer to the [PHPUnit documentation](https://phpunit.de/manual/current/en/test-doubles.html)
 
 In `CustomersRepositoryTest` create a mock object for PDO that shoud:
 - expect one call of method `query`
@@ -126,17 +126,17 @@ Exercise 4: integration testing
 
 **Objective:** to understand importance of decoupling in integration testing.
 
-Programmer's interface to customer model is provided by service class.
+Programmer's interface to customer model is provided by *Service* class.
 Said class uses not only repository object to fetch the data from database,
 but also turns the record into entity (class `Entity`) using hydrator.
 
 Our task is to test the whole cooperation of classes, that is to test the integrated
 subsystem related to customer model.
 
-Write integration test for service class using mocks.
+Write integration test for class *Service* using mocks.
 The main difficulty is to provide PDO mock to the service for dependency injection.
 
-To overcome the difficulty provide method `setDb` in service class.
+To overcome the difficulty provide method `setDb`.
 
 Exercise 5: introducing Service Locator pattern
 -----------------------------------------------
@@ -149,11 +149,11 @@ In this exercise we will replace imperative setting of PDO object with declarati
 using Service Locator pattern - another IoC technique.
 
 Write a service locator that registers objects under string key (similar to Registry in ZF).
-Then amend the service class to use service locator by string, i.e.:
+Then amend the *Service* to use service locator by string, i.e.:
 
 ```
 public function getCustomerById($id) {
-	$pdo = \Locator::get("db");
+	$pdo = \Locator::get("\\PDO");
 	(...)
 }
 ```
@@ -163,5 +163,6 @@ Write an end-to-end test for obtaining customer entity object and test its prope
 Further reading
 ---------------
 
-- PHPUnit documentation: https://phpunit.de/manual/current/en/test-doubles.html
-- Mockery framework: http://docs.mockery.io/en/latest/
+- [PHPUnit documentation](https://phpunit.de/manual/current/en/test-doubles.html)
+- [Mockery framework](http://docs.mockery.io/en/latest/)
+- [Nexway ServiceManager](https://github.com/NexwayGroup/softgallery/blob/cc0b9b8b5836a972a8e51747a6d38066b0182441/include/ServiceManager/ServiceManager.php)
